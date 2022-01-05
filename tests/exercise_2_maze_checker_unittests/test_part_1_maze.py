@@ -1,5 +1,6 @@
 from unittest import TestCase
-from exercise_1_maze.part_5_maze_checker import check_maze, find_openings, make_dict, find_neighbors, is_connected
+from exercise_2_maze_checker.part_1_maze_checker import check_maze, find_openings, make_dict, find_neighbors, \
+    is_connected
 
 
 class Test(TestCase):
