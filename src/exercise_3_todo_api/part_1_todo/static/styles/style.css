@@ -1,0 +1,149 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #f2f2f2;
+}
+
+
+.header {
+    background-image: url("/static/images/header.jpg");
+    background-color: #955;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 30px;
+    text-align: right;
+    font-size: 60px;
+    letter-spacing:  0.1em;
+    text-shadow: 5px 10px 15px #000000;
+    border-radius: 30px;
+}
+
+.header h2, h4, h5, h6 {
+    padding: 8px;
+}
+
+#container-header {
+    padding:5px;
+}
+
+mark {
+  border-radius: 5px;
+  margin: 10px;
+  border-radius: 15px;
+  background-color:#f2f2f2;
+  box-shadow: 5px 5px #aaaaaa;
+  padding:10px;
+}
+
+.container-body {
+  border-radius: 5px;
+  background-color: light-grey;
+  padding: 20px;
+  margin: 5px;
+}
+
+#container-form {
+  margin: 60px;
+  margin-top: 10px;
+}
+
+#jumbotron {
+  box-shadow: 10px 10px #899596;
+}
+
+#container-article {
+    margin: 30px;
+}
+
+#create-kind-btn {
+    margin: 10px;
+}
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+.container-title h1 {
+    text-align: center;
+    font-size: 20px;
+}
+
+#wrapper {
+    background-color: #f2f2f2;
+    margin: 0 auto;
+    padding:0;
+    position:relative;
+}
+
+table {
+  font-family: arial, sans-serif;!important
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+#close-btn {
+    margin-left: 30px;
+}
+
+#message {
+    text-align: center;
+    padding: 20px;
+}
+
+#kind-feedback {
+    display: inline;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+#actions {
+   text-align: center;
+   font-size: 18px;
+}
+
+#check {
+    color: green;
+}
+
+#trash {
+    color: red;
+    cursor: pointer;
+}
+@media screen and (max-width: 800px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+    .header h2, h4, h5, h6 {
+        padding: 10px;
+    }
+
+}
+
+

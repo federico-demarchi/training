@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+    {% block title %} Page Not Found {% endblock %}
+
+    {% block content %}
+<div class="container-body">
+  <div class="jumbotron">
+    <h2 class="display-4">Page Not Found</h2><br>
+    <p class="lead">{{ e }}<br> Start a new TODO and keep it in mind!</p>
+    <hr class="my-4">
+    <p>Having a hard time remembering pending issues?... go somewhere nice :)</p>
+    <a class="btn btn-primary btn-lg" href="/form" role="button">New TODO</a>
+  </div>
+</div>
+    {% endblock %}

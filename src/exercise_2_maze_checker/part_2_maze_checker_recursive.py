@@ -80,6 +80,7 @@ def is_connected(current, neighbor, maze_dict):
             return False
 
 
+# Use Recursion here
 def check_maze(maze):
     openings = find_openings(maze)
     maze_dict = make_dict(maze)
@@ -95,17 +96,27 @@ def check_maze(maze):
             next_coord = neighbor2
         else:
             next_coord = neighbor1
-        while is_connected(current, next_coord, maze_dict):
-            path_list.append(next_coord)
-            current = next_coord
-            neighbor1, neighbor2 = find_neighbors(current, maze_dict)
-            if neighbor1 in path_list:
-                next_coord = neighbor2
-            else:
-                next_coord = neighbor1
-            if maze_dict.get(next_coord) is None:
-                return True, path_list
+        has_valid_path, path = next_tile(current, next_coord, path_list, maze_dict)
+        if has_valid_path:
+            return True, path
     return False, None
+
+
+def next_tile(current, next_coord, path_list, maze_dict):
+    if is_connected(current, next_coord, maze_dict):
+        path_list.append(next_coord)
+        current = next_coord
+        neighbor1, neighbor2 = find_neighbors(current, maze_dict)
+        if neighbor1 in path_list:
+            next_coord = neighbor2
+        else:
+            next_coord = neighbor1
+        if maze_dict.get(next_coord) is None:
+            return True, path_list
+        else:
+            return next_tile(current, next_coord, path_list, maze_dict)
+    else:
+        return False, path_list
 
 
 # USAGE

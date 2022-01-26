@@ -1,0 +1,106 @@
+
+{% extends "layout.html" %}
+
+{% block title %} NEW TODO´S {% endblock %}
+
+{% block content %}
+
+
+     <div class="container-body">
+      <div id="container-form">
+    {% if todo_id %}
+    <div id="jumbotron">
+        <form action="/todos/{{todo_id}}"  method = "POST">
+
+
+    {% endif %}
+    <div class="jumbotron">
+        <form action="/todos/new" method = "POST">
+
+
+            <div class="form-group">
+              <label for="kind">Kind</label>
+              <select class="custom-select" name="kind">
+                <option value="">Select a kind</option>
+                {% for kind in kinds %}
+                <option name="kind" id="kind" value="{{ kind.kind_id }}">{{ kind }}</option>
+                {% endfor %}
+
+              </select>
+                </br>
+                {% if errors and errors.kind %}
+                <div class="invalid-feedback" id="kind-feedback">{{ errors.kind }}</div>
+                {% endif %}
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-secondary btn-sm float-right" id="create-kind-btn" data-toggle="modal" data-target="#exampleModal">Create new</button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New kind of TODO</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      </div>
+                      <div class="modal-body">
+                        <label for="new_kind">New Kind: </label>
+                        <input type="text" class="form-control" id="new_kind" name="new_kind" placeholder="kind...">
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" formaction="/kinds" class="btn btn-primary">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control {% if errors and errors.title %}is-invalid{% endif %}" id="title" name="title" placeholder="your task´s title..." value="{{ title }}">
+              {% if errors and errors.title %}
+              <div class="invalid-feedback">{{ errors.title }}</div>
+              {% endif %}
+          </div>
+
+
+          <div class="form-group">
+            <label for="deadline">Deadline</label>
+            <input type="date" class="form-control" id="deadline" name="deadline" placeholder="when should it be done?" value="{{ deadline }}">
+          </div>
+
+
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" id="status" name="status">
+            {% if status == "Done" %}
+              <option value="Done">Done</option>
+              <option value="Pending">Pending</option>
+            {% else %}
+              <option value="Pending">Pending</option>
+              <option value="Done">Done</option>
+            {% endif %}
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="comment">Comments</label>
+            <input type="text" class="form-control" id="comment" name="comment" placeholder="leave a comment" value="{{ comment }}">
+          </div>
+          {% if todo_id %}
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/todos"><button type="button" id="close-btn" class="btn btn-primary">Cancel</button></a>
+          {% else %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/todos"><button type="button" id="close-btn" class="btn btn-primary">Back</button></a>
+          {% endif %}
+
+        </form>
+      </div>
+     </div>
+  </div>
+
+{% endblock %}
