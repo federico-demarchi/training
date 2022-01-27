@@ -15,25 +15,22 @@ class Test(TestCase):
         self.assertEqual(expected, result)
 
     def test_find_openings_2x2(self):
-        maze = [["NP", "BL"],
-                ["NP", "TL"]]
-        result = find_openings(maze)
+        maze_dict = {(0, 0): 'NP', (0, 1): 'BL', (1, 0): 'NP', (1, 1): 'TL'}
+        result = find_openings(maze_dict, 2, 2)
         expected = None
         self.assertEqual(expected, result)
 
     def test_find_openings_3x3(self):
-        maze = [["BR", "BL", "NP"],
-                ["TR", "TL", "NP"],
-                ["TR", "LR", "TL"]]
-        result = find_openings(maze)
+        maze_dict = {(0, 0): 'BR', (0, 1): 'BL', (0, 2): 'NP', (1, 0): 'TR', (1, 1): 'TL', (1, 2): 'NP', (2, 0): 'TR',
+                     (2, 1): 'LR', (2, 2): 'TL'}
+        result = find_openings(maze_dict, 3, 3)
         expected = None
         self.assertEqual(expected, result)
 
     def test_find_openings_4x3(self):
-        maze = [['BT', 'TR', 'TR', 'LR'],
-                ['BL', 'LR', 'TL', 'BR'],
-                ['BR', 'BT', 'BL', 'BL']]
-        result = find_openings(maze)
+        maze_dict = {(0, 0): 'BT', (0, 1): 'TR', (0, 2): 'TR', (0, 3): 'LR', (1, 0): 'BL', (1, 1): 'LR', (1, 2): 'TL',
+                     (1, 3): 'BR', (2, 0): 'BR', (2, 1): 'BT', (2, 2): 'BL', (2, 3): 'BL'}
+        result = find_openings(maze_dict, 3, 4)
         expected = [(0, 0), (0, 1), (0, 2), (0, 3), (1, 0), (1, 3), (2, 0), (2, 1), (2, 2), (2, 3)]
         self.assertEqual(expected, result)
 

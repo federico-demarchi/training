@@ -12,26 +12,17 @@ def make_dict(maze):
     return {(row_idx, col_idx): tile for (row_idx, row) in enumerate(maze) for (col_idx, tile) in enumerate(row)}
 
 
-def find_openings(maze):
-    maze_dict = make_dict(maze)
+def find_openings(maze_dict, height, width):
     openings = []
-    for row_idx, row in enumerate(maze):
-        for col_idx, tile in enumerate(row):
-            if row_idx == 0 or row_idx == len(maze) - 1:
+    for row_idx in range(height):
+        for col_idx in range(width):
+            if row_idx == 0 or row_idx == height - 1 or col_idx == 0 or col_idx == width - 1:
                 current = (row_idx, col_idx)
                 if maze_dict[current] == "NP":
                     continue
                 neighbor1, neighbor2 = find_neighbors(current, maze_dict)
                 if maze_dict.get(neighbor1) is None or maze_dict.get(neighbor2) is None:
                     openings.append(current)
-            else:
-                if col_idx == 0 or col_idx == len(row) - 1:
-                    current = (row_idx, col_idx)
-                    if maze_dict[current] == "NP":
-                        continue
-                    neighbor1, neighbor2 = find_neighbors(current, maze_dict)
-                    if maze_dict.get(neighbor1) is None or maze_dict.get(neighbor2) is None:
-                        openings.append(current)
     if not openings:
         return None
     else:
@@ -81,8 +72,8 @@ def is_connected(current, neighbor, maze_dict):
 
 
 def check_maze(maze):
-    openings = find_openings(maze)
     maze_dict = make_dict(maze)
+    openings = find_openings(maze_dict, len(maze), len(maze[0]))
     if openings is None:
         return False, None
     for opening in openings:
