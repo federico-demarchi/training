@@ -33,12 +33,12 @@ class Test(TestCase):
         db.session.commit()
 
     def test_update_todo(self):
-        response = self.client.post('/todo/<int:todo_id>')
+        response = self.client.post('/todos/<int:todo_id>')
         self.assertEqual(response.status_code, 302)
 
     def test_delete_todo(self):
 
-        response = self.client.post('/todo/<int:todo_id>')
+        response = self.client.post('/todos/<int:todo_id>/delete')
         self.assertEqual(response.status_code, 302)
 
     def test_tearDown(self):
