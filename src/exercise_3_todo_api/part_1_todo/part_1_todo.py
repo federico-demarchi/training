@@ -97,10 +97,12 @@ def update_todo(todo_id):
         todo.status = request.form.get("status")
         todo.comment = request.form.get("comment")
         errors = validate_todo(todo)
+
         if errors:
+            kinds = Kind.query.all()
             return render_template('form.html', title=todo.title, kind_id=todo.kind_id, deadline=todo.deadline,
                                    status=todo.status, comment=todo.comment, todo_id=todo.todo_id,
-                                   errors=errors)
+                                   errors=errors, kinds=kinds)
         try:
             db.session.commit()
             return redirect("/todos")
