@@ -4,7 +4,7 @@ import pymysql
 
 
 app = Flask(__name__, template_folder="template")
-pymysql.install_as_MySQLdb()  # OJO ESTO
+pymysql.install_as_MySQLdb()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Parana1168!!@localhost:3306/demo'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['EXPLAIN_TEMPLATE_LOADING'] = True
@@ -88,6 +88,7 @@ def get_todo(todo_id):
 @app.route('/todos/<int:todo_id>', methods=['POST'])
 def update_todo(todo_id):
     todo = Todo.query.get(todo_id)
+    kinds = Kind.query.all()
     if todo is None:
         return redirect('/error')
     else:
@@ -99,7 +100,7 @@ def update_todo(todo_id):
         errors = validate_todo(todo)
 
         if errors:
-            kinds = Kind.query.all()
+
             return render_template('form.html', title=todo.title, kind_id=todo.kind_id, deadline=todo.deadline,
                                    status=todo.status, comment=todo.comment, todo_id=todo.todo_id,
                                    errors=errors, kinds=kinds)
@@ -153,7 +154,9 @@ def change_status(todo_id):
     todo = Todo.query.get(todo_id)
     if todo.status == 'Pending':
         todo.status = 'Done'
-        db.session.commit()
+    elif todo.status == 'Done':
+        todo.status = 'Pending'
+    db.session.commit()
     return redirect("/todos")
 
 
