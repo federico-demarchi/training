@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
+import os
 
-
+db_pass = os.environ.get('DB_PASS')
 app = Flask(__name__, template_folder="template")
 pymysql.install_as_MySQLdb()
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Parana1168!!@localhost:3306/demo'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:' + db_pass + '@localhost:3306/demo'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['EXPLAIN_TEMPLATE_LOADING'] = True
 db = SQLAlchemy(app)
