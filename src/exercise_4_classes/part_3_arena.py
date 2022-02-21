@@ -3,168 +3,196 @@ Then the game will generate a random monster. The monster has health points and 
 amount of HP. The monster can have (or not) an affix that reduces damage taken from fire, ice or arcane magic. The
 main point of the game is to stay alive (hero HP > 0) and defeat the enemy. """
 
-from part_2_heros import Warrior, Archer, Mage, Monster
-import random
+from part_2_heros import Hero, Warrior, Archer, Mage, FireResistantMonster, ArcaneResistantMonster, \
+    IceResistantMonster, FullyResistantMonster
+from random import choice
+from datetime import datetime
 
 
-def clear():
-    print("\n" * 12)
+class Arena:
+    def __init__(self, player_name="", date=datetime.today()):
+        self.game_date = date
+        self.player_name = player_name
 
+    def set_user_name(self):
+        self.player_name = input("Please enter your name and press Enter to register your score: ")
 
-heroes_dict = {1: Warrior('Jorge "El Roña" Castro'),
-               2: Warrior('Richie "Treta" Silver'),
-               3: Mage('Carlos "La Mona" Jimenez'),
-               4: Mage('Daniel "Tota" Santillán'),
-               5: Archer('Guillermo "Willy" Crook'),
-               6: Archer('Enzo "El "Principe" Franccescoli')}
+    def get_user_name(self):
+        return self.player_name
 
-monsters_dict = {1: Monster('Baby Etchecopar'),
-                 2: Monster('Ramon "Wanchope" Abila'),
-                 3: Monster('Hetor "Bambino" Veira'),
-                 4: Monster('Daniel "Tota" Santillán'),
-                 5: Monster('Ricardo Fort'),
-                 6: Monster('Emilio Dissi')}
+    @staticmethod
+    def store_score():
+        with open("scores.txt", "a") as f:
+            f.write(f"\nDate: {new_game.game_date}.\n"
+                    f"Player Name: {new_game.player_name}\n"
+                    f"Fighter: {player.name}. Final HP: {player.hp}\n"
+                    f"Monster Name: {monster.name}. Final HP: {monster.hp}\n\n")
+            f.close()
 
+    @staticmethod
+    def show_scores():
+        Arena.clear()
+        with open("scores.txt") as f:
+            print(f.read())
+            f.close()
 
-def game_intro():
-    print("############## WELCOME TO THE ARENA ################\n")
-    print("INSTRUCTIONS \nYou would have to fight a monster and try to stay alive. \n"
-          "Each class of fighter has his own weapons and all of them \n"
-          "count with just one affix.\n")
-    input("Press Enter to continue:")
-    clear()
-    input("THESE WOULD BE THE FIGHTERS...\n\nPress Enter again to meet them: ")
-    clear()
+    @staticmethod
+    def play_again_or_exit():
+        user_choice = input(f"Type 'exit' if you want to quit or Press Enter if you want to play again: ")
+        if user_choice == 'exit':
+            Arena.clear()
+            print(f"Hope you've had fun {Arena.get_user_name(new_game)}. See you later!")
+        else:
+            return Arena.select_player()
 
+    @staticmethod
+    def clear():
+        print("\n" * 12)
 
-game_intro()
+    @staticmethod
+    def game_intro():
+        Arena.clear()
+        print("###########################################################################")
+        print("######################### WELCOME TO THE ARENA ############################")
+        print("###########################################################################\n")
+        print("INSTRUCTIONS: Choose a fighter. Try to defeat a randomly selected monster.\n"
+              "Each class of fighter has it's own type of magic and a single potion.\n")
 
+    @staticmethod
+    def show_fighters():
+        for key, val in heroes_dict.items():
+            print(key, val)
 
-def show_fighters():
-    for key, val in heroes_dict.items():
-        print(key, val)
+    @staticmethod
+    def select_player():
+        try:
+            print()
+            selector = int(input("Please, select a fighter, type it's number and press Enter to confirm: "))
+            result = heroes_dict[selector]
+            print()
+        except ValueError:
+            print()
+            print("Wrong selection, try again...")
+            return Arena.select_player()
+        except KeyError:
+            print()
+            print("Wrong selection, try again...")
+            return Arena.select_player()
+        return result
 
+    @staticmethod
+    def actions_dict_maker():
+        Arena.clear()
+        print(f"Excellent selection, a {player.__class__.__name__}!! Let's see what can he do...")
+        if isinstance(player, Hero):
+            actions = player.get_actions()
+        result = dict(zip(range(len(actions)), actions))
+        return result
 
-show_fighters()
-
-
-def select_player():
-    try:
+    @staticmethod
+    def show_actions():
+        print("------------------------------------------------------------------------")
+        print(f"{player.name} Actions:")
         print()
-        selector = int(input("Please, select a fighter, type it's number and press Enter to confirm: "))
-        result = heroes_dict[selector]
+        for k, v in player_actions_dict.items():
+            print(k, ": ", v.__name__)
+        print("------------------------------------------------------------------------")
+
+    @staticmethod
+    def monster_selector():
+        monster_list = list(monsters_dict.values())
+        result = choice(monster_list)
+        input(f"You will fight {result.name}!! Press Enter to Start the fight: ")
+        Arena.clear()
+        return result
+
+    @staticmethod
+    def game_start():
+        print("*************************************************************************")
+        print("***************************THE FIGHT HAD BEGUN***************************")
+        print("*************************************************************************")
         print()
-    except KeyError:
+        print(f"You see the monster, it’s horrifying and dangerous!!! \nBut {player.name} has no fear...")
         print()
-        print("Wrong selection, try again...")
-        return select_player()
-    return result
 
+    @staticmethod
+    def player_move():
+        try:
+            Arena.show_actions()
+            move = player_actions_dict[int(input("SELECT AN ACTION BY IT'S NUMBER AND PRESS ENTER TO CONTINUE: "))]
+            Arena.clear()
+        except KeyError:
+            Arena.clear()
+            print(f"Ouch! {player.name} doesn't have an action for that number. Check out:")
+            return Arena.player_move()
+        except ValueError:
+            Arena.clear()
+            print(f"Ouch! {player.name} doesn't have an action for that number. Check out:")
+            return Arena.player_move()
+        try:
+            return move(player, monster)
+        except TypeError:
+            return move(player)
 
-player = select_player()
+    @staticmethod
+    def monster_move():
+        actions = monster._get_actions()
+        move = choice(actions)
+        print(move(monster, player))
 
-
-def actions_dict_maker():
-    print("You chose:", player.name, "\n")
-    input(f"Press Enter again, to see {player.name} actions: ")
-    result = dict(zip(range(len(player._get_actions())), player._get_actions()))
-    return result
-
-
-player_actions_dict = actions_dict_maker()
-
-
-def show_actions():
-    print()
-    for k, v in player_actions_dict.items():
-        print(k, ": ", v)
-    print()
-
-
-show_actions()
-
-
-def monster_selector():
-    input(f"Now, a monster should be selected randomly. Please, Press Enter to do so: ")
-    clear()
-    monster_list = list(monsters_dict.values())
-    result = random.choice(monster_list)
-    return result
-
-
-monster = monster_selector()
-
-
-def game_start():
-    input(f"The selected monster was: {monster.name}. Press Enter to Start the fight: ")
-    clear()
-    print("*****************************************************************")
-    print("**********************THE FIGHT HAD BEGUN************************")
-    print("*****************************************************************")
-    print("\n"*10)
-    print(f"You see the monster, it’s horrifying and dangerous!!! But {player.name} has no fear...")
-    print()
-
-
-game_start()
-
-
-def player_move():
-    try:
-        move = player_actions_dict[int(input("SELECT AN ACTION BY IT'S NUMBER AND PRESS ENTER TO CONTINUE: "))]
-        clear()
-    except KeyError:
-        print(f"Ouch! {player.name} doesn't have an action for that number. Check out:")
-        show_actions()
-        return player_move()
-    if move == 'fire_blackhole':
-        return player.fire_blackhole(monster)
-    elif move == 'fire_fireball':
-        return player.fire_fireball(monster)
-    elif move == 'fire_freeze':
-        return player.fire_freeze(monster)
-    elif move == 'hammer_attack':
-        return player.hammer_attack(player, monster)
-    elif move == 'arrow_attack':
-        return player.arrow_attack(player, monster)
-    elif move == 'get_affix':
-        return player.get_affix()
-
-
-def monster_move():
-    monster_actions = [action for action in dir(monster) if callable(getattr(monster, action)) and action.startswith('_') is False]
-
-    move = random.choice(monster_actions)
-
-    if move == monster_actions[0]:
-        print(monster.beast_attack(player))
-    elif move == monster_actions[1]:
-        print(monster.crash_running_attack(player))
-    elif move == monster_actions[2]:
-        print(monster.invisible_attack(player))
-
-
-def game():
-    player_move()
-    monster_move()
-    print()
-    monster._show_health()
-    player._show_health()
-    print()
-    if monster.hp <= 0:
-        print(f"{monster.name} is dead....")
+    @staticmethod
+    def fight():
+        Arena.player_move()
+        Arena.monster_move()
         print()
-        print('*********************************************************')
-        print(f'VERY GOOD, YOU WON!! {monster.name} was defeated.')
-        print('*********************************************************')
-    elif player.hp <= 0:
-        print(f"{player.name} is dead....")
+        print("#########################################################################")
+        monster._show_health()
+        player._show_health()
+        print("#########################################################################")
         print()
-        print('***************************************')
-        print(f'TOO BAD!! {monster.name} defeated you.')
-        print('***************************************')
-    else:
-        return game()
+        if monster.hp <= 0:
+            print(f"{' '*10}† † † ...{monster.name} is dead... † † †")
+            print()
+            print('*************************************************************************')
+            print(f'************VERY GOOD, YOU WON!! {monster.name} was defeated.***********')
+            print('*************************************************************************')
+        elif player.hp <= 0:
+            print(f"{' '*10}† † † ...{player.name} is dead... † † †")
+            print()
+            print('*************************************************************************')
+            print(f'******************* GAME OVER!! {monster.name} defeated you.**************')
+            print('*************************************************************************')
+        else:
+            return Arena.fight()
 
 
-game()
+# USAGE
+if __name__ == '__main__':
+    heroes_dict = {1: Warrior('Jorge "El Roña" Castro'),
+                   2: Warrior('Richie "Treta" Silver'),
+                   3: Mage('Carlos "La Mona" Jimenez'),
+                   4: Mage('Daniel "Tota" Santillán'),
+                   5: Archer('Guillermo "Willy" Crook'),
+                   6: Archer('Enzo "El "Principe" Franccescoli')}
+
+    monsters_dict = {1: FireResistantMonster('Baby Etchecopar'),
+                     2: FullyResistantMonster('Ramon "Wanchope" Abila'),
+                     3: ArcaneResistantMonster('Hector "Bambino" Veira'),
+                     4: IceResistantMonster('Daniel "Tota" Santillán'),
+                     5: FireResistantMonster('Ricardo Fort'),
+                     6: ArcaneResistantMonster('Emilio Dissi')}
+
+    new_game = Arena()
+
+    new_game.game_intro()
+    new_game.show_fighters()
+    player = new_game.select_player()
+    player_actions_dict = new_game.actions_dict_maker()
+    new_game.show_actions()
+    monster = new_game.monster_selector()
+    new_game.game_start()
+    new_game.fight()
+    new_game.set_user_name()
+    new_game.store_score()
+    new_game.show_scores()
+    new_game.play_again_or_exit()
