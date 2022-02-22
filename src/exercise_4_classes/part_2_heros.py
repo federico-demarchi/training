@@ -9,7 +9,7 @@ from random import randint
 from abc import abstractmethod, ABCMeta, ABC
 
 
-class Magic(ABC):
+class Magic(ABC):           # INTERFACE
     @abstractmethod
     def __init__(self):
         raise NotImplementedError
@@ -89,7 +89,7 @@ class ArcaneMagic(Magic, ABC):
             print(f'Cant throw a blackhole, your mana is not enough.')
 
 
-class Hero(ABC):
+class Hero(ABC):                    # ABSTRACT BASE CLASSES
     @abstractmethod
     def __init__(self, num_potions=3, hp=100, mana=100, name="", character=""):
         self.hp = hp

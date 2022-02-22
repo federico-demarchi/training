@@ -22,7 +22,7 @@ class ProblemSet5NewsStory(unittest.TestCase):
                           'test description', 'test link', datetime.now())
         self.assertEqual(story.get_title(), 'test title')
 
-    def testNewsStoryGetdescription(self):
+    def testNewsStoryGetDescription(self):
         story = NewsStory('test guid', 'test title', 
                           'test description', 'test link', datetime.now())
         self.assertEqual(story.get_description(), 'test description')
@@ -36,7 +36,8 @@ class ProblemSet5NewsStory(unittest.TestCase):
         story = NewsStory('test guid', 'test title', 
                           'test description', 'test link', datetime.now())
         self.assertEqual(type(story.get_pubdate()), datetime)
-        
+
+
 class ProblemSet5(unittest.TestCase):
     def setUp(self):
         class TrueTrigger:
@@ -66,7 +67,7 @@ class ProblemSet5(unittest.TestCase):
         nothing   = NewsStory('', 'I like poison dart frogs.', '', '', datetime.now())
 
         s1 = TitleTrigger('PURPLE COW')
-        s2  = TitleTrigger('purple cow')
+        s2 = TitleTrigger('purple cow')
         for trig in [s1, s2]:
             self.assertTrue(trig.evaluate(cuddly), "TitleTrigger failed to fire when the phrase appeared in the title.")
             self.assertTrue(trig.evaluate(exclaim), "TitleTrigger failed to fire when the words were separated by exclamation marks.")
@@ -98,7 +99,7 @@ class ProblemSet5(unittest.TestCase):
         nothing   = NewsStory('', '', 'I like poison dart frogs.', '', datetime.now())
 
         s1 = DescriptionTrigger('PURPLE COW')
-        s2  = DescriptionTrigger('purple cow')
+        s2 = DescriptionTrigger('purple cow')
         for trig in [s1, s2]:
             self.assertTrue(trig.evaluate(cuddly), "DescriptionTrigger failed to fire when the phrase appeared in the description.")
             self.assertTrue(trig.evaluate(exclaim), "DescriptionTrigger failed to fire when the words were separated by exclamation marks.")
@@ -131,17 +132,16 @@ class ProblemSet5(unittest.TestCase):
         future_time = future_time.replace(tzinfo=pytz.timezone("EST"))
         future = NewsStory('', '', '', '', future_time)
 
-
         s1 = BeforeTrigger('12 Oct 2016 23:59:59')
         s2 = AfterTrigger('12 Oct 2016 23:59:59')
 
         self.assertTrue(s1.evaluate(ancient), "BeforeTrigger failed to fire on news from long ago")
         self.assertTrue(s1.evaluate(just_now), "BeforeTrigger failed to fire on news happened right before specified time")
 
-        self.assertFalse(s1.evaluate(in_a_bit), "BeforeTrigger fired to fire on news happened right after specified time")
+        self.assertFalse(s1.evaluate(in_a_bit), "BeforeTrigger failed to fire on news happened right after specified time")
         self.assertFalse(s1.evaluate(future), "BeforeTrigger fired to fire on news from the future")
 
-        self.assertFalse(s2.evaluate(ancient), "AfterTrigger fired to fire on news from long ago")
+        self.assertFalse(s2.evaluate(ancient), "AfterTrigger failed to fire on news from long ago")
         self.assertFalse(s2.evaluate(just_now), "BeforeTrigger fired to fire on news happened right before specified time")
 
         self.assertTrue(s2.evaluate(in_a_bit), "AfterTrigger failed to fire on news just after specified time")
@@ -234,6 +234,7 @@ class ProblemSet5(unittest.TestCase):
         class MatchTrigger(Trigger):
             def __init__(self, story):
                 self.story = story
+
             def evaluate(self, story):
                 return story == self.story
         triggers = [MatchTrigger(a), MatchTrigger(nob)]
@@ -249,4 +250,3 @@ if __name__ == "__main__":
     suite.addTest(unittest.makeSuite(ProblemSet5NewsStory))
     suite.addTest(unittest.makeSuite(ProblemSet5))
     unittest.TextTestRunner(verbosity=2).run(suite)
-
