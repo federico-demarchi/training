@@ -42,8 +42,11 @@ class Arena:
         if user_choice == 'exit':
             Arena.clear()
             print(f"Hope you've had fun {Arena.get_user_name(new_game)}. See you later!")
+            result = False
+            return result
         else:
-            return Arena.select_player()
+            result = True
+            return result
 
     @staticmethod
     def clear():
@@ -182,17 +185,18 @@ if __name__ == '__main__':
                      5: FireResistantMonster('Ricardo Fort'),
                      6: ArcaneResistantMonster('Emilio Dissi')}
 
-    new_game = Arena()
-
-    new_game.game_intro()
-    new_game.show_fighters()
-    player = new_game.select_player()
-    player_actions_dict = new_game.actions_dict_maker()
-    new_game.show_actions()
-    monster = new_game.monster_selector()
-    new_game.game_start()
-    new_game.fight()
-    new_game.set_user_name()
-    new_game.store_score()
-    new_game.show_scores()
-    new_game.play_again_or_exit()
+    flag = True
+    while flag:
+        new_game = Arena()
+        new_game.game_intro()
+        new_game.show_fighters()
+        player = new_game.select_player()
+        player_actions_dict = new_game.actions_dict_maker()
+        new_game.show_actions()
+        monster = new_game.monster_selector()
+        new_game.game_start()
+        new_game.fight()
+        new_game.set_user_name()
+        new_game.store_score()
+        new_game.show_scores()
+        flag = new_game.play_again_or_exit()

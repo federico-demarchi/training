@@ -1,12 +1,30 @@
 
-Date: 2022-02-21 19:21:06.227146.
+Date: 2022-02-22 00:43:59.617854.
 Player Name: fede
 Fighter: Richie "Treta" Silver. Final HP: 0
-Monster Name: Daniel "Tota" Santillán. Final HP: 20
+Monster Name: Ricardo Fort. Final HP: 20
 
 
-Date: 2022-02-21 19:23:25.149251.
+Date: 2022-02-22 00:45:32.641088.
 Player Name: fede
-Fighter: Jorge "El Roña" Castro. Final HP: 0
-Monster Name: Daniel "Tota" Santillán. Final HP: 50
+Fighter: Richie "Treta" Silver. Final HP: 20
+Monster Name: Emilio Dissi. Final HP: 0
+
+
+Date: 2022-02-22 00:47:19.534634.
+Player Name: fede
+Fighter: Jorge "El Roña" Castro. Final HP: 10
+Monster Name: Hector "Bambino" Veira. Final HP: 0
+
+
+Date: 2022-02-22 00:49:27.293629.
+Player Name: fede
+Fighter: Guillermo "Willy" Crook. Final HP: 26
+Monster Name: Hector "Bambino" Veira. Final HP: 0
+
+
+Date: 2022-02-22 00:49:27.293629.
+Player Name: fede
+Fighter: Daniel "Tota" Santillán. Final HP: 20
+Monster Name: Baby Etchecopar. Final HP: 0
 

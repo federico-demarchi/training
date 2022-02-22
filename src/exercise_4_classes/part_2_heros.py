@@ -9,7 +9,7 @@ from random import randint
 from abc import abstractmethod, ABCMeta, ABC
 
 
-class Magic(ABC):           # INTERFACE
+class Magic(ABC):                   # INTERFACE
     @abstractmethod
     def __init__(self):
         raise NotImplementedError
@@ -100,7 +100,7 @@ class Hero(ABC):                    # ABSTRACT BASE CLASSES
 
     @staticmethod
     @abstractmethod
-    def _get_actions(x):             # POLYMORPHISM ?  view line 208
+    def _get_actions(x):
         raise NotImplementedError
 
     def get_actions(self):
@@ -144,7 +144,7 @@ class Hero(ABC):                    # ABSTRACT BASE CLASSES
             print(f"PLAYER {' '*49} HP: {self.hp} Mana: {self.mana}")
 
 
-class Warrior(Hero, FireMagic):                            # INHERITANCE
+class Warrior(Hero, FireMagic):                            # MULTIPLE INHERITANCE
     def __init__(self, name):
         super().__init__(character='furious', name=name, num_potions=2)
 
@@ -234,7 +234,7 @@ class Monster(Hero, ABC):
             return f"{self.name} is trying to run...he seems pretty scared."
 
 
-class FireResistantMonster(Monster):
+class FireResistantMonster(Monster):                        # INHERITANCE
     def is_fire_resistant(self):
         return True
 
