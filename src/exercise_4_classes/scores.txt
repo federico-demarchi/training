@@ -1,0 +1,12 @@
+
+Date: 2022-02-21 19:21:06.227146.
+Player Name: fede
+Fighter: Richie "Treta" Silver. Final HP: 0
+Monster Name: Daniel "Tota" Santillán. Final HP: 20
+
+
+Date: 2022-02-21 19:23:25.149251.
+Player Name: fede
+Fighter: Jorge "El Roña" Castro. Final HP: 0
+Monster Name: Daniel "Tota" Santillán. Final HP: 50
+
