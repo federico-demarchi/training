@@ -60,10 +60,12 @@ class Vector2d:
         return f'<{self.x}, {self.y}>'
 
 
-ve1 = Vector2d(2, 4)
-ve2 = Vector2d(3, 6)
+# USAGE
+if __name__ == '__main__':
+    ve1 = Vector2d(2, 4)
+    ve2 = Vector2d(3, 6)
 
-print(ve1.length)
-print(ve1 * ve2)
-print(ve1 + ve2)
-print(ve1 - ve2)
+    print(ve1.length)
+    print(ve1 * ve2)
+    print(ve1 + ve2)
+    print(ve1 - ve2)

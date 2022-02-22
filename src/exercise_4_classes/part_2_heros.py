@@ -100,7 +100,7 @@ class Hero(ABC):                    # ABSTRACT BASE CLASSES
 
     @staticmethod
     @abstractmethod
-    def _get_actions(x):
+    def _get_actions(x):             # POLYMORPHISM ?  view line 208
         raise NotImplementedError
 
     def get_actions(self):
